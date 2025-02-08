@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="bg-secondary" style="height: 50rem">
+
+        <div class="container ">
+            <div class="pt-5 text-dark">
+                <h2>BANDS</h2>
+                <p>
+                    A website about different bands
+                </p>
+            </div>
+        </div>
+    </div>
+        <div class="container">
+            <div class="row ">
+                {% for event in events %}
+                <div class="col-4 d-flex justify-content-center">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{event.poster.url}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.name }}</h5>
+                            <p class="card-text">{{ event.date }}</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}
