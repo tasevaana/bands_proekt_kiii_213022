@@ -1,0 +1,35 @@
+name: Run Django Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Compose
+      run: |
+        docker-compose -f docker-compose.yml up -d --build
+
+    - name: Wait for Database to Be Ready
+      run: |
+        until docker exec $(docker-compose ps -q web) pg_isready -h postgres -p 5432; do
+          echo "Waiting for PostgreSQL to be ready..."
+          sleep 2
+        done
+
+    - name: Run Django Tests
+      run: |
+        docker-compose exec -T web python manage.py test
+
+    - name: Stop Docker Compose Services
+      run: docker-compose down
