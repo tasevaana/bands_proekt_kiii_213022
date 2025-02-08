@@ -16,25 +16,30 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install Docker Compose
+    - name: Install Docker Compose (v2 Plugin)
       run: |
         sudo apt-get update
-        sudo apt-get install -y docker-compose
+        sudo apt-get install -y docker-compose-plugin
+        docker compose version  # Verify installation
 
-    - name: Set up Docker Compose
+    - name: Build and Start Docker Compose Services
+      working-directory: ./Kolokviumska
       run: |
-        docker-compose -f docker-compose.yml up -d --build
+        docker compose -f docker-compose.yml up -d --build
 
     - name: Wait for Database to Be Ready
+      working-directory: ./Kolokviumska
       run: |
-        until docker exec $(docker-compose ps -q web) pg_isready -h postgres -p 5432; do
+        until docker compose exec -T postgres pg_isready -h localhost -p 5432; do
           echo "Waiting for PostgreSQL to be ready..."
           sleep 2
         done
 
     - name: Run Django Tests
+      working-directory: ./Kolokviumska
       run: |
-        docker-compose exec -T web python manage.py test
+        docker compose exec -T web python manage.py test
 
     - name: Stop Docker Compose Services
-      run: docker-compose down
+      working-directory: ./Kolokviumska
+      run: docker compose down
