@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    'flowers.local.com'
+    'bands.project.com'
 ]
 
 
