@@ -4,6 +4,6 @@ metadata:
   name: app-config
   namespace: development
 data:
-  SQL_NAME: exams_db
+  SQL_NAME: bands_db
   SQL_USER: postgres
   SQL_PASSWORD: postgres
