@@ -31,11 +31,6 @@ jobs:
         done
         echo "PostgreSQL is ready!"
 
-    - name: Run Django Migrations
-      working-directory: ./Kolokviumska
-      run: |
-        docker compose run --rm web python manage.py migrate
-
     - name: Run Django Tests
       working-directory: ./Kolokviumska
       run: |
