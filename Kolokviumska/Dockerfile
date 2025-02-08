@@ -13,4 +13,5 @@ COPY . /app/
 
 RUN chmod +x /app/start.sh
 
-ENTRYPOINT ["/app/start.sh"]
+ENTRYPOINT ["/bin/sh", "-c", "/app/start.sh"]
+
