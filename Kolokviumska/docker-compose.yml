@@ -13,6 +13,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy  
+    entrypoint: ["/bin/sh", "-c", "chmod +x /app/start.sh && /app/start.sh"]
 
   postgres:
     image: postgres
